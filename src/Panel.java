@@ -5,7 +5,7 @@ import java.awt.event.KeyEvent;
 
 public class Panel extends JFrame  {
 
-    private static final int TILE_SIZE = 50; // Tile size for better visibility
+    private static final int TILE_SIZE = 30; // Tile size for better visibility
     private static final int BOARD_SIZE = 20; // Board size. IF IS SIZE CHANGED THEN MATRIX IN generateMaze() SHOULD BE CHANGED ACCORDINGLY
     private TilePanel[][] board;
     private int[][] maze;

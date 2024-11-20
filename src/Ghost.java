@@ -12,27 +12,18 @@ public class Ghost implements IDrawable, Runnable, Cloneable {
         drawable.loadImage(path);
     }
 
-    protected Object clone() throws CloneNotSupportedException {
-        try{
-            Ghost clonedGhost = (Ghost)super.clone();
-            clonedGhost.drawable = (IDrawable)drawable;
-            return clonedGhost;
-        }
-        catch(CloneNotSupportedException e){
-            e.printStackTrace();
-            return null;
-        }
-    }
-
-    public void addColor(){
-
-
-
-
-    }
-
     public void run() {
         //todo implement
+    }
+
+    protected Object clone()  {
+        return new Ghost();
+    }
+
+    public void changeColor() {
+
+
+
     }
 
 }
