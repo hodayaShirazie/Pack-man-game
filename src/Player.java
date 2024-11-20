@@ -3,7 +3,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 // todo add locateable or/and movable interface and drawable
-public class Player implements State, Runnable, IDrawable, ILocatable, IMovable {
+class Player implements State, Runnable, ILocatable, IMovable {
 
     private static Player instance = null;
 

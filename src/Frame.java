@@ -3,7 +3,7 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class Panel extends JFrame  {
+public class Frame extends JFrame  {
 
     private static final int TILE_SIZE = 30; // Tile size for better visibility
     private static final int BOARD_SIZE = 20; // Board size. IF IS SIZE CHANGED THEN MATRIX IN generateMaze() SHOULD BE CHANGED ACCORDINGLY
@@ -16,18 +16,28 @@ public class Panel extends JFrame  {
 //    private int playerY = 1;
 //    private int score = 0;
 
-    public Panel() {
+    public Frame() {
+
         player = Player.getInstance();
         player.setLocation(new Point(1, 1));
+
         board = new TilePanel[BOARD_SIZE][BOARD_SIZE];
+
         maze = new int[BOARD_SIZE][BOARD_SIZE];
+
         setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
 
         generateMaze();
 
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                Dot dot = maze[i][j] == 2 ? new Dot(new Point(i,j)) : null; //get maze[i][j] if equals to 2 and null else
+                Dot dot;
+                if(maze[i][j] == 2){
+                    dot = new Dot(new Point(i,j));
+                }
+                else{
+                    dot = null;
+                }
                 board[i][j] = new TilePanel(maze[i][j], dot);
                 board[i][j].setPreferredSize(new Dimension(TILE_SIZE, TILE_SIZE));
                 add(board[i][j]);
@@ -47,6 +57,8 @@ public class Panel extends JFrame  {
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
         setFocusable(true);
+
+
     }
 
     private void generateMaze() {
@@ -130,8 +142,15 @@ public class Panel extends JFrame  {
     }
 
     public static void main(String[] args) {
-        new Panel();
+
+        new Frame();
+
     }
+
+
+    //todo add Ghost to board with moving
+    //todo implement run function
+    //todo implement observer
 
 
 

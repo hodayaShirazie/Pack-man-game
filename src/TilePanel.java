@@ -11,15 +11,25 @@ public class TilePanel extends JPanel{
     private Dot dot;
     private final int tileType;
     private String direction; // "UP", "DOWN", "LEFT", "RIGHT"
+    private Ghost ghost;
+
+    public void setGhost(Ghost ghost) {
+        this.ghost = ghost;
+        repaint();  // יצייר מחדש את ה-Panel כדי להציג את רוח הרפאים
+    }
 
     public TilePanel(int tileType, Dot dot) {
         this.tileType = tileType;
         this.dot = dot;
         this.isPlayer = false;
         this.direction = "RIGHT";
+//        ghost = null;
+
+        Thread ghostThread = new Thread(ghost);
+        ghostThread.start();
     }
 
-    public void setPlayer(boolean isPlayer, String direction) {
+    public void setPlayer(boolean isPlayer, String direction) {//todo maybe add a field isAGhost
         this.isPlayer = isPlayer;
         this.direction = direction; // Update player's direction
         repaint();
@@ -38,6 +48,8 @@ public class TilePanel extends JPanel{
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+//        ghost.drawObject(g);
+
         if (tileType == 1) {
             setBackground(Color.BLUE); // Wall
         } else {
@@ -46,6 +58,9 @@ public class TilePanel extends JPanel{
 
         if (dot != null) {
             dot.draw(g, getWidth(), getHeight());
+        }
+        if (ghost != null) {
+            ghost.drawObject(g);
         }
 
 //            if (isPlayer) {

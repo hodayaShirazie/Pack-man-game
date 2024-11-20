@@ -1,4 +1,5 @@
 import java.awt.*;
+import java.awt.image.BufferedImage;
 
 
 /**
@@ -10,7 +11,7 @@ public interface IDrawable {
     /**
      * The path to the directory where images are stored.
      */
-    final static String PICTURE_PATH = "Images/"; //todo upload image ang get a path
+//    final static String PICTURE_PATH = ""; //todo upload image ang get a path
 
     /**
      * Loads images for the drawable object.
@@ -25,6 +26,12 @@ public interface IDrawable {
      * @param g the Graphics context to use for drawing the object.
      */
     void drawObject(Graphics g);
+
+    BufferedImage getImage();
+
+    void setImage(BufferedImage image);
+
+    TilePanel getPanel();
 
 }
 

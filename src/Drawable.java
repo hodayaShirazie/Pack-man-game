@@ -1,19 +1,23 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 public class Drawable implements IDrawable{
 
-    private Image image;
+    private BufferedImage image;
     private int size;
-    private JPanel panel;//todo add panel
+    private TilePanel panel;
+//    private JPanel panel;//todo add panel
 
-    public Drawable(Image image, int size, JPanel panel){
-        this.image = image;
+    public Drawable(String path, int size, TilePanel panel){
+//        this.image = image;
+        loadImage(path);
         this.size = size;
         this.panel = panel;
+//        this.panel = panel;
     }
 
     /**
@@ -24,7 +28,8 @@ public class Drawable implements IDrawable{
      */
     public void loadImage(String imageName) {
         try {
-            image = ImageIO.read(new File(PICTURE_PATH + imageName));
+            image = ImageIO.read(new File("C:\\Users\\Student\\IdeaProjects\\Pack-man-game\\Ghost.png"));
+//            image = ImageIO.read(new File(PICTURE_PATH + imageName));
         }
         catch (IOException e) {
             System.out.println("Cannot load images for " + imageName); }
@@ -38,12 +43,25 @@ public class Drawable implements IDrawable{
      */
     public void drawObject (Graphics g) {
         //todo implement
-//        if(image != null)
-//            g.drawImage(image, super.getLocationX(), super.getLocationY(), size, size, panel);
+        if(image != null)
+            g.drawImage(image, 2, 60, size, size, panel);
     }
 
     public void setSize(int size) {
         this.size = size;
+    }
+
+    public BufferedImage getImage() {
+        return image;
+    }
+
+    public void setImage(BufferedImage image) {
+        this.image = image;
+
+    }
+
+    public TilePanel getPanel() {
+        return panel;
     }
 
 
