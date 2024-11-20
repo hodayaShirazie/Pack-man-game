@@ -10,11 +10,15 @@ public class Panel extends JFrame  {
     private TilePanel[][] board;
     private int[][] maze;
 
-    private int playerX = 1;
-    private int playerY = 1;
-    private int score = 0;
+    private Player player;
+
+//    private int playerX = 1;
+//    private int playerY = 1;
+//    private int score = 0;
 
     public Panel() {
+        player = Player.getInstance();
+        player.setLocation(new Point(1, 1));
         board = new TilePanel[BOARD_SIZE][BOARD_SIZE];
         maze = new int[BOARD_SIZE][BOARD_SIZE];
         setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
@@ -23,14 +27,14 @@ public class Panel extends JFrame  {
 
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
-                Dot dot = maze[i][j] == 2 ? new Dot(i, j) : null; //get maze[i][j] if equals to 2 and null else
+                Dot dot = maze[i][j] == 2 ? new Dot(new Point(i,j)) : null; //get maze[i][j] if equals to 2 and null else
                 board[i][j] = new TilePanel(maze[i][j], dot);
                 board[i][j].setPreferredSize(new Dimension(TILE_SIZE, TILE_SIZE));
                 add(board[i][j]);
             }
         }
 
-        board[playerX][playerY].setPlayer(true,"RIGHT"); // Mark initial Pac-Man position
+        board[player.getLocation().x][player.getLocation().y].setPlayer(true,"RIGHT"); // Mark initial Pac-Man position
         addKeyListener(new KeyAdapter() {
             @Override
             public void keyPressed(KeyEvent e) {
@@ -51,21 +55,21 @@ public class Panel extends JFrame  {
                 {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
                 {1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1},
                 {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-                {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1},
+                {1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1},
                 {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1},
-                {1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 1, 1},
+                {1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1},
                 {1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1},
-                {1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-                {1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-                {1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1},
-                {1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 0, 1, 0, 1},
+                {1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1},
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-                {1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 1},
+                {1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
+                {1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0},
+                {1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                {1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0},
                 {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1},
+                {1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1},
                 {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
 
@@ -82,8 +86,8 @@ public class Panel extends JFrame  {
     }
 
     private void movePlayer(int keyCode) {
-        int nextX = playerX;
-        int nextY = playerY;
+        int nextX = player.getLocation().x;
+        int nextY = player.getLocation().y;
         String direction = "RIGHT"; // Default direction
 
         switch (keyCode) {
@@ -106,18 +110,17 @@ public class Panel extends JFrame  {
         }
 
         if (isValidMove(nextX, nextY)) {
-            board[playerX][playerY].setPlayer(false, ""); // Clear previous position
+            board[player.getLocation().x][player.getLocation().y].setPlayer(false, ""); // Clear previous position
 
-            playerX = nextX;
-            playerY = nextY;
+            player.move(new Point(nextX, nextY));
 
-            TilePanel currentTile = board[playerX][playerY];
+            TilePanel currentTile = board[player.getLocation().x][player.getLocation().y];
             currentTile.setPlayer(true, direction); // Update with new position and direction
 
             if (currentTile.hasDot()) {
-                score++;
+                player.incrementScore();
                 currentTile.removeDot();
-                System.out.println("Score: " + score);
+                System.out.println("Score: " + player.getScore());
             }
         }
     }
