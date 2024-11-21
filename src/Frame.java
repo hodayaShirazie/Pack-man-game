@@ -14,6 +14,8 @@ public class Frame extends JFrame  {
     private Player player;
     private int numOfGhosts;
     private boolean isGameActive;
+    private static int maxScoreWorth;
+    private static final int scoreWorth = 5;
 
 //    private int playerX = 1;
 //    private int playerY = 1;
@@ -32,12 +34,13 @@ public class Frame extends JFrame  {
         setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
 
         generateMaze();
+        maxScoreWorth = calcMaxScoreWorth();
 
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 Dot dot;
 
-                if(maze[i][j] == 2){
+                if(maze[i][j] == 0){
                     dot = new Dot(new Point(i,j));
                 }
                 else{
@@ -50,8 +53,6 @@ public class Frame extends JFrame  {
             }
         }
 
-//        addGhosts();
-
         board[player.getLocation().x][player.getLocation().y].setPlayer(true,"RIGHT"); // Mark initial Pac-Man position
         addKeyListener(new KeyAdapter() {
             @Override
@@ -60,14 +61,21 @@ public class Frame extends JFrame  {
             }
         });
 
-        setTitle("Pac-Man-Game");
+        setTitle("Pac-Man-Game | Lives: " + player.getLives());
         setSize(BOARD_SIZE * TILE_SIZE, BOARD_SIZE * TILE_SIZE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-//        setVisible(true);
-//        setFocusable(true);
+
         startGame();
+    }
 
-
+    private int calcMaxScoreWorth() {
+        int sum = 0;
+        for (int i = 0; i < BOARD_SIZE; i++)
+            for (int j = 0; j < BOARD_SIZE; j++)
+                if (maze[i][j] == 0)
+                    ++sum;
+        System.out.println("sum = " + sum*scoreWorth);
+        return sum*scoreWorth;
     }
 
     private void startGame() {
@@ -122,15 +130,9 @@ public class Frame extends JFrame  {
         };
 
         // Copy predefinedMaze to the maze variable, converting paths to dots
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
-                if (predefinedMaze[i][j] == 0) {
-                    maze[i][j] = 2; // Change all paths to dots
-                } else {
-                    maze[i][j] = predefinedMaze[i][j];
-                }
-            }
-        }
+        for (int i = 0; i < BOARD_SIZE; i++)
+            for (int j = 0; j < BOARD_SIZE; j++)
+                maze[i][j] = predefinedMaze[i][j];
     }
 
     private void movePlayer(int keyCode) {
@@ -168,6 +170,7 @@ public class Frame extends JFrame  {
             if (currentTile.hasDot()) {
                 player.incrementScore();
                 currentTile.removeDot();
+                isPlayerWon();
                 System.out.println("Score: " + player.getScore());
             }
 
@@ -178,6 +181,60 @@ public class Frame extends JFrame  {
 
     public boolean isLocationNotWall(int x, int y) {
         return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE && maze[x][y] != 1;
+    }
+
+    private void isPlayerWon() {
+        if(player.getScore() == maxScoreWorth) {
+            System.out.println("player won !! congrats !!!!");
+            declareWining();
+        }
+    }
+
+    private void declareWining() {
+        JFrame frame = new JFrame("Game Over");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 150);
+        frame.setLocationRelativeTo(null); // Center the window
+
+        // Create a panel with a vertical layout for components
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
+
+        // Add congratulatory text
+        JLabel text = new JLabel("Congratulations! You won with " + maxScoreWorth + " points.", JLabel.CENTER);
+        text.setFont(new Font("Arial", Font.PLAIN, 14));
+
+        // Create a panel for the buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
+        JButton leaveButton = new JButton("End Game");
+        JButton playAgainButton = new JButton("Play Again");
+        buttonPanel.add(leaveButton);
+        buttonPanel.add(playAgainButton);
+
+        // Add components to the main panel
+        mainPanel.add(text, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        // Add the main panel to the frame
+        frame.add(mainPanel);
+        frame.setVisible(true);
+
+        // Leave button functionality
+        leaveButton.addActionListener(e -> System.exit(0)); // Exit the program
+
+        // Play again button functionality
+        playAgainButton.addActionListener(e -> {
+            resetGame();
+            System.out.println("Play Again was clicked");
+            frame.dispose(); // Close the current frame
+            // Logic to restart the game goes here
+        });
+    }
+
+    private void resetGame() {
+        player.resetPlayer();
+        dispose();
+        new Frame();
     }
 
 //    private void addGhosts() {
@@ -228,7 +285,7 @@ public class Frame extends JFrame  {
     public void updatePlayer(){
         player.update();
         isGameActive = false;
-        //todo break at the game for a second
+        setTitle("Pac-Man-Game | Lives: " + player.getLives());
     }
 
     public void increaseGhost(){
@@ -244,9 +301,6 @@ public class Frame extends JFrame  {
         new Frame();
 
     }
-
-
-
 
 
 //BASIC FUNCTION TO GENERATE MAZE

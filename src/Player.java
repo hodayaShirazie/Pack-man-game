@@ -71,4 +71,15 @@ class Player implements State, Runnable, ILocatable, IMovable {
     public void setWin(boolean win) {
         this.win = win;
     }
+
+    private void resetScores() {
+        score = 0;
+    }
+
+    public void resetPlayer() {
+        setLocation(new Point(1, 1));
+        resetScores();
+        state = new KeepPlayingState(0);
+    }
+
 }
