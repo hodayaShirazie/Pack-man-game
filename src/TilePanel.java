@@ -11,10 +11,13 @@ public class TilePanel extends JPanel{
     private Dot dot;
     private final int tileType;
     private String direction; // "UP", "DOWN", "LEFT", "RIGHT"
+    private boolean isGhost;
     private Ghost ghost;
 
+
+
     public void setGhost(Ghost ghost) {
-        this.ghost = ghost;
+        this.isGhost = true;
         repaint();  // יצייר מחדש את ה-Panel כדי להציג את רוח הרפאים
     }
 
@@ -22,16 +25,23 @@ public class TilePanel extends JPanel{
         this.tileType = tileType;
         this.dot = dot;
         this.isPlayer = false;
+        this.isGhost = false;
         this.direction = "RIGHT";
-//        ghost = null;
 
-        Thread ghostThread = new Thread(ghost);
-        ghostThread.start();
+//        Thread ghostThread = new Thread(ghost);
+//        ghostThread.start();
     }
 
     public void setPlayer(boolean isPlayer, String direction) {//todo maybe add a field isAGhost
         this.isPlayer = isPlayer;
         this.direction = direction; // Update player's direction
+        repaint();
+    }
+
+    public void setGhost(boolean isGhost, Point point) {
+        ghost = new Ghost(this, point);
+        ghost.setImage(ghost.changeColor());
+        this.isGhost = isGhost;
         repaint();
     }
 
@@ -59,7 +69,8 @@ public class TilePanel extends JPanel{
         if (dot != null) {
             dot.draw(g, getWidth(), getHeight());
         }
-        if (ghost != null) {
+
+        if (isGhost) {
             ghost.drawObject(g);
         }
 
@@ -74,7 +85,6 @@ public class TilePanel extends JPanel{
 //                int y = (getHeight() - size) / 2;
 //                g2d.fillArc(x, y, size, size, 30, 300); // 30 to 330 degrees creates the "mouth" shape
 //            }
-
 
         if (isPlayer) {
             g.setColor(Color.YELLOW);
@@ -93,5 +103,6 @@ public class TilePanel extends JPanel{
             g.fillArc(x, y, width, height, startAngle, arcAngle);
         }
     }
-    }
+
+}
 

@@ -2,6 +2,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Random;
+
 
 public class Frame extends JFrame  {
 
@@ -32,17 +34,23 @@ public class Frame extends JFrame  {
         for (int i = 0; i < BOARD_SIZE; i++) {
             for (int j = 0; j < BOARD_SIZE; j++) {
                 Dot dot;
+
                 if(maze[i][j] == 2){
                     dot = new Dot(new Point(i,j));
                 }
                 else{
                     dot = null;
                 }
+
                 board[i][j] = new TilePanel(maze[i][j], dot);
                 board[i][j].setPreferredSize(new Dimension(TILE_SIZE, TILE_SIZE));
                 add(board[i][j]);
             }
         }
+
+        Random rand = new Random();
+        Point point = new Point(rand.nextInt(BOARD_SIZE), rand.nextInt(BOARD_SIZE));
+        board[point.x][point.y].setGhost(true, point);
 
         board[player.getLocation().x][player.getLocation().y].setPlayer(true,"RIGHT"); // Mark initial Pac-Man position
         addKeyListener(new KeyAdapter() {

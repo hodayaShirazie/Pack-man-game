@@ -17,7 +17,6 @@ public class Drawable implements IDrawable{
         loadImage(path);
         this.size = size;
         this.panel = panel;
-//        this.panel = panel;
     }
 
     /**
@@ -44,7 +43,7 @@ public class Drawable implements IDrawable{
     public void drawObject (Graphics g) {
         //todo implement
         if(image != null)
-            g.drawImage(image, 2, 60, size, size, panel);
+            g.drawImage(image, 1, 1, size, size, panel);
     }
 
     public void setSize(int size) {

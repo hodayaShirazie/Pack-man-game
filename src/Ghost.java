@@ -2,12 +2,15 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
 
-public class Ghost implements IDrawable, Runnable, Cloneable {
+public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable {
 
     private IDrawable drawable;
 
-    public Ghost(TilePanel panel){
+    private ILocatable locatable;
+
+    public Ghost(TilePanel panel, Point point){
         drawable = new Drawable("C:\\Users\\Student\\IdeaProjects\\Pack-man-game\\Ghost.png", 20, panel);
+        locatable = new Locatable(point);
     }
 
     public void drawObject(Graphics g){
@@ -19,7 +22,7 @@ public class Ghost implements IDrawable, Runnable, Cloneable {
     }
 
     protected Object clone()  {
-        return new Ghost(this.getPanel());
+        return new Ghost(this.getPanel(), this.getLocation());
     }
 
     public BufferedImage changeColor() {
@@ -102,6 +105,14 @@ public class Ghost implements IDrawable, Runnable, Cloneable {
         TilePanel currentPanel = getPanel();
         // עדכון המיקום של הרוח בהתאם ל-direction או כל לוגיקה אחרת
         // לדוג' עדכון המיקום במטריצה ובאחרת
+    }
+
+    public Point getLocation(){
+        return locatable.getLocation();
+    }
+
+    public void setLocation(Point point){
+        locatable.setLocation(point);
     }
 
 
