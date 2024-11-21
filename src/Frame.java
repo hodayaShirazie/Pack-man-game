@@ -8,7 +8,7 @@ import java.util.Random;
 public class Frame extends JFrame  {
 
     private static final int TILE_SIZE = 30; // Tile size for better visibility
-    private static final int BOARD_SIZE = 20; // Board size. IF IS SIZE CHANGED THEN MATRIX IN generateMaze() SHOULD BE CHANGED ACCORDINGLY
+//    private static final int BOARD_SIZE = 34; // Board size. IF IS SIZE CHANGED THEN MATRIX IN generateMaze() SHOULD BE CHANGED ACCORDINGLY
     private TilePanel[][] board;
     private int[][] maze;
     private Player player;
@@ -16,6 +16,10 @@ public class Frame extends JFrame  {
     private boolean isGameActive;
     private static int maxScoreWorth;
     private static final int scoreWorth = 5;
+
+    private static final int BOARD_SIZE_WIDTH = 29; // Board size. IF IS SIZE CHANGED THEN MATRIX IN generateMaze() SHOULD BE CHANGED ACCORDINGLY
+    private static final int BOARD_SIZE_HEIGHT = 25; // Board size. IF IS SIZE CHANGED THEN MATRIX IN generateMaze() SHOULD BE CHANGED ACCORDINGLY
+
 
 //    private int playerX = 1;
 //    private int playerY = 1;
@@ -25,19 +29,19 @@ public class Frame extends JFrame  {
 
         isGameActive = true;
         player = Player.getInstance();
-        player.setLocation(new Point(1, 1));
+        player.setLocation(new Point(9, 10));
 
-        board = new TilePanel[BOARD_SIZE][BOARD_SIZE];
+        board = new TilePanel[BOARD_SIZE_WIDTH][BOARD_SIZE_HEIGHT];
 
-        maze = new int[BOARD_SIZE][BOARD_SIZE];
+        maze = new int[BOARD_SIZE_WIDTH][BOARD_SIZE_HEIGHT];
 
-        setLayout(new GridLayout(BOARD_SIZE, BOARD_SIZE));
+        setLayout(new GridLayout(BOARD_SIZE_WIDTH, BOARD_SIZE_HEIGHT));
 
         generateMaze();
         maxScoreWorth = calcMaxScoreWorth();
 
-        for (int i = 0; i < BOARD_SIZE; i++) {
-            for (int j = 0; j < BOARD_SIZE; j++) {
+        for (int i = 0; i < BOARD_SIZE_WIDTH; i++) {
+            for (int j = 0; j < BOARD_SIZE_HEIGHT; j++) {
                 Dot dot;
 
                 if(maze[i][j] == 0){
@@ -62,16 +66,18 @@ public class Frame extends JFrame  {
         });
 
         setTitle("Pac-Man-Game | Lives: " + player.getLives());
-        setSize(BOARD_SIZE * TILE_SIZE, BOARD_SIZE * TILE_SIZE);
+        setSize(BOARD_SIZE_WIDTH * TILE_SIZE, BOARD_SIZE_HEIGHT * TILE_SIZE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
 
         startGame();
+
+        setLocationRelativeTo(null);
     }
 
     private int calcMaxScoreWorth() {
         int sum = 0;
-        for (int i = 0; i < BOARD_SIZE; i++)
-            for (int j = 0; j < BOARD_SIZE; j++)
+        for (int i = 0; i < BOARD_SIZE_WIDTH; i++)
+            for (int j = 0; j < BOARD_SIZE_HEIGHT; j++)
                 if (maze[i][j] == 0)
                     ++sum;
         System.out.println("sum = " + sum*scoreWorth);
@@ -107,31 +113,40 @@ public class Frame extends JFrame  {
 
     private void generateMaze() {
         int[][] predefinedMaze = {
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-                {1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1},
-                {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1},
-                {1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 0, 0, 1, 1},
-                {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1},
-                {1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1},
-                {1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 0, 0, 1, 1},
-                {1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 0, 1, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1},
-                {1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1},
-                {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0},
-                {1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
-                {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0},
-                {1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0, 0, 0, 0},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0},
-                {1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0},
-                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1},
-                {1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1},
-                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 0},
+                {1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 0},
+                {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 1, 1, 1, 0},
+                {1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0},
+                {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 0},
+                {1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0},
+                {1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 1, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 1, 1, 1, 0},
+                {1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0},
+                {1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0},
+                {1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1},
+                {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 1, 0},
+                {1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 1, 1, 1, 0},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                {1, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0},
+                {1, 0, 1, 1, 1, 1, 1, 0, 1, 1, 0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 0, 1, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1, 0, 0, 0, 0, 1, 0},
+                {1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 1, 0, 1, 1, 0},
+                {1, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1, 0, 0, 0, 0, 0, 0, 1, 1, 0},
+                {1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 1, 1, 1, 1, 1, 0, 1, 1, 0},
+                {1, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 0},
+                {1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0},
+                {1, 0, 0, 0, 1, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 0, 1, 1, 0, 0, 0, 1, 0, 1, 1, 0, 1, 0, 0, 1, 0, 1, 1, 0},
+                {1, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, 1, 0, 1, 1, 1},
+                {1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0, 1, 0, 0, 0, 0, 0, 0, 0, 1, 0},
+                {1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1}
         };
 
         // Copy predefinedMaze to the maze variable, converting paths to dots
-        for (int i = 0; i < BOARD_SIZE; i++)
-            for (int j = 0; j < BOARD_SIZE; j++)
+        for (int i = 0; i < BOARD_SIZE_WIDTH; i++)
+            for (int j = 0; j < BOARD_SIZE_HEIGHT; j++)
                 maze[i][j] = predefinedMaze[i][j];
     }
 
@@ -174,13 +189,17 @@ public class Frame extends JFrame  {
                 System.out.println("Score: " + player.getScore());
             }
 
-            if(currentTile.playerTouchedGhost())
+            if(currentTile.playerTouchedGhost()) {
                 updatePlayer();
+                if(player.getState().getLives() == 0){
+                    informLose();
+                }
+            }
         }
     }
 
     public boolean isLocationNotWall(int x, int y) {
-        return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE && maze[x][y] != 1;
+        return x >= 0 && x < BOARD_SIZE_WIDTH && y >= 0 && y < BOARD_SIZE_HEIGHT && maze[x][y] != 1;
     }
 
     private void isPlayerWon() {
@@ -193,7 +212,7 @@ public class Frame extends JFrame  {
     private void declareWining() {
         JFrame frame = new JFrame("Game Over");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(300, 150);
+        frame.setSize(400, 200);
         frame.setLocationRelativeTo(null); // Center the window
 
         // Create a panel with a vertical layout for components
@@ -202,12 +221,53 @@ public class Frame extends JFrame  {
 
         // Add congratulatory text
         JLabel text = new JLabel("Congratulations! You won with " + maxScoreWorth + " points.", JLabel.CENTER);
-        text.setFont(new Font("Arial", Font.PLAIN, 14));
+        text.setFont(new Font("Arial", Font.PLAIN, 20));
 
         // Create a panel for the buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
         JButton leaveButton = new JButton("End Game");
         JButton playAgainButton = new JButton("Play Again");
+        buttonPanel.add(leaveButton);
+        buttonPanel.add(playAgainButton);
+
+        // Add components to the main panel
+        mainPanel.add(text, BorderLayout.CENTER);
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        // Add the main panel to the frame
+        frame.add(mainPanel);
+        frame.setVisible(true);
+
+        // Leave button functionality
+        leaveButton.addActionListener(e -> System.exit(0)); // Exit the program
+
+        // Play again button functionality
+        playAgainButton.addActionListener(e -> {
+            resetGame();
+            System.out.println("Play Again was clicked");
+            frame.dispose(); // Close the current frame
+            // Logic to restart the game goes here
+        });
+    }
+
+    private void informLose(){
+        JFrame frame = new JFrame("Game Over");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(400, 200);
+        frame.setLocationRelativeTo(null); // Center the window
+
+        // Create a panel with a vertical layout for components
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10)); // Add padding
+
+        // Add congratulatory text
+        JLabel text = new JLabel("You are a loser ;( \n\r you only got " + player.getScore() + " points.", JLabel.CENTER);
+        text.setFont(new Font("Arial", Font.PLAIN, 20));
+
+        // Create a panel for the buttons
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
+        JButton leaveButton = new JButton("I give up");
+        JButton playAgainButton = new JButton("I want to try Again");
         buttonPanel.add(leaveButton);
         buttonPanel.add(playAgainButton);
 
@@ -260,7 +320,7 @@ public class Frame extends JFrame  {
         int ghostsAmount = num, i = 0;
         Point point;
         do {
-            point = new Point(rand.nextInt(BOARD_SIZE), rand.nextInt(BOARD_SIZE));
+            point = new Point(rand.nextInt(BOARD_SIZE_WIDTH), rand.nextInt(BOARD_SIZE_HEIGHT));
             if (isLocationNotWall(point.x, point.y)) {
                 board[point.x][point.y].addGhost(true, point,this);
                 i++;
@@ -301,7 +361,6 @@ public class Frame extends JFrame  {
         new Frame();
 
     }
-
 
 //BASIC FUNCTION TO GENERATE MAZE
 //    private void generateRandomMaze() {

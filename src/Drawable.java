@@ -9,16 +9,19 @@ public class Drawable implements IDrawable{
 
     private BufferedImage image;
 
-    private int size;
+    private int height;
+
+    private int width;
 
     private TilePanel panel;
 
     private Point location;
 
-    public Drawable(String path, int size, TilePanel panel, Point location){
+    public Drawable(String path, int width, int height, TilePanel panel, Point location){
 //        this.image = image;
         loadImage(path);
-        this.size = size;
+        this.height = height;
+        this.width = width;
         this.panel = panel;
         this.location = location;
     }
@@ -49,11 +52,12 @@ public class Drawable implements IDrawable{
      */
     public void drawObject (Graphics g) {
         if(image != null)
-            g.drawImage(image, 1, 1, size, size, panel);
+            g.drawImage(image, 1, 1, height, width, panel);
     }
 
-    public void setSize(int size) {
-        this.size = size;
+    public void setSize(int height, int width) {
+        this.height = height;
+        this.width = width;
     }
 
     public BufferedImage getImage() {

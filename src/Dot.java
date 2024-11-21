@@ -9,7 +9,7 @@ public class Dot implements ILocatable{
     }
 
     public void draw(Graphics g, int width, int height) {
-        g.setColor(Color.YELLOW);
+        g.setColor(Color.orange);
         int dotSize = width / 4;
         g.fillOval(width / 2 - dotSize / 2, height / 2 - dotSize / 2, dotSize, dotSize);
     }

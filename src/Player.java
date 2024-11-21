@@ -13,6 +13,10 @@ class Player implements State, Runnable, ILocatable, IMovable {
     private IMovable movable;
     private boolean win;
 
+    public State getState() {
+        return state;
+    }
+
     private Player() {
         win = false;
         score = 0;
@@ -79,7 +83,8 @@ class Player implements State, Runnable, ILocatable, IMovable {
     public void resetPlayer() {
         setLocation(new Point(1, 1));
         resetScores();
-        state = new KeepPlayingState(0);
+        state = new KeepPlayingState(3);
     }
+
 
 }

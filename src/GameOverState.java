@@ -15,7 +15,5 @@ public class GameOverState implements State{
 
     }
     public void fail(){
-        System.out.println("from gameOver" + lives);
-        //todo callback - show screen of gameOver and the scores/playAgain
     }
 }

@@ -17,7 +17,7 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable, IMovab
     public Ghost(TilePanel panel, Point point, Frame frame){
         locatable = new Locatable(point);
         movable = new Movable(locatable.getLocation());
-        drawable = new Drawable("Ghost.png", 20, panel, locatable.getLocation());
+        drawable = new Drawable("Ghost.png", 28, 17, panel, locatable.getLocation());
         this.frame = frame;
     }
 
