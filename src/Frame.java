@@ -13,6 +13,7 @@ public class Frame extends JFrame  {
     private int[][] maze;
     private Player player;
     private int numOfGhosts;
+    private boolean isGameActive;
 
 //    private int playerX = 1;
 //    private int playerY = 1;
@@ -20,6 +21,7 @@ public class Frame extends JFrame  {
 
     public Frame() {
 
+        isGameActive = true;
         player = Player.getInstance();
         player.setLocation(new Point(1, 1));
 
@@ -69,9 +71,30 @@ public class Frame extends JFrame  {
     }
 
     private void startGame() {
+
+        Thread thread = new Thread(player);
+        thread.start();
+
         addGhosts(3);
         setVisible(true);
         setFocusable(true);
+
+        Timer timer = new Timer(1 / 120, e -> {
+//            System.out.println(numOfGhosts);
+            if (numOfGhosts < 3){
+                Random rand = new Random();
+                int addGhosts = rand.nextInt(1,5 - numOfGhosts + 1);
+                addGhosts(addGhosts);
+            }
+        });
+        timer.start();
+//        while (true){
+////            System.out.println(isGameActive);
+//            if (!isGameActive){
+//                JOptionPane.showMessageDialog(this, "Game Paused! Resuming in 3 seconds...");
+//                new Timer(3000, ev -> isGameActive = true).start();
+//            }
+//        }
     }
 
     private void generateMaze() {
@@ -157,23 +180,23 @@ public class Frame extends JFrame  {
         return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE && maze[x][y] != 1;
     }
 
-    private void addGhosts() {
-        Random rand = new Random();
-        int ghostsAmount = rand.nextInt(1, 6), i = 0;
-        Point point;
-        do {
-            point = new Point(rand.nextInt(BOARD_SIZE), rand.nextInt(BOARD_SIZE));
-            if (isLocationNotWall(point.x, point.y)) {
-                board[point.x][point.y].addGhost(true, point,this);
-                i++;
-                Thread thread = new Thread(board[point.x][point.y].getGhost());
-                thread.start();
-            }
-
-
-        }
-        while (i < ghostsAmount);
-    }
+//    private void addGhosts() {
+//        Random rand = new Random();
+//        int ghostsAmount = rand.nextInt(1, 6), i = 0;
+//        Point point;
+//        do {
+//            point = new Point(rand.nextInt(BOARD_SIZE), rand.nextInt(BOARD_SIZE));
+//            if (isLocationNotWall(point.x, point.y)) {
+//                board[point.x][point.y].addGhost(true, point,this);
+//                i++;
+//                Thread thread = new Thread(board[point.x][point.y].getGhost());
+//                thread.start();
+//            }
+//
+//
+//        }
+//        while (i < ghostsAmount);
+//    }
 
     private void addGhosts(int num) {
         Random rand = new Random();
@@ -204,6 +227,7 @@ public class Frame extends JFrame  {
 
     public void updatePlayer(){
         player.update();
+        isGameActive = false;
         //todo break at the game for a second
     }
 
@@ -220,10 +244,6 @@ public class Frame extends JFrame  {
         new Frame();
 
     }
-
-
-    //todo implement run function
-    //todo implement observer
 
 
 

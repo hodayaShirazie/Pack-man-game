@@ -153,7 +153,6 @@ public class TilePanel extends JPanel{
         return (isGhost && isPlayer);
     }
 
-
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
@@ -170,7 +169,7 @@ public class TilePanel extends JPanel{
             dot.draw(g, getWidth(), getHeight());
         }
 
-        if (isGhost) {
+        if (ghost != null) {
             ghost.drawObject(g);
         }
 

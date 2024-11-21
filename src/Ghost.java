@@ -99,7 +99,6 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable, IMovab
 
     }
 
-
     public BufferedImage getImage() {
         return drawable.getImage();
     }
@@ -124,7 +123,10 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable, IMovab
 
         while (System.currentTimeMillis() - startTime < timeToLive) {
 
+
+
             this.getDrawable().getPanel().moveGhost(this.frame);
+
             try {
                 sleep(400);
             }
@@ -134,7 +136,7 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable, IMovab
         }
 
 //        getPanel().getGhost().setImage(changeColorToWhite());//todo why dont work?
-
+//
 //        try {
 //            sleep(5000);
 //        }

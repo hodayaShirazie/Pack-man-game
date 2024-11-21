@@ -11,14 +11,14 @@ class Player implements State, Runnable, ILocatable, IMovable {
     private State state;
     private ILocatable position;
     private IMovable movable;
+    private boolean win;
 
     private Player() {
+        win = false;
         score = 0;
         state = new KeepPlayingState(3);
         position = new Locatable(new Point(0, 0));
         movable = new Movable(position.getLocation());
-//        drawable = new Drawable();
-        //todo send constructor parameters
     }
 
     public static Player getInstance() {
@@ -52,7 +52,7 @@ class Player implements State, Runnable, ILocatable, IMovable {
     }
 
     public void run() {
-        //todo
+        while (state.getLives() >= 0 || !win){}
     }
 
     public Point getLocation() {
@@ -66,5 +66,9 @@ class Player implements State, Runnable, ILocatable, IMovable {
     public void move(Point destination) {
 
         movable.move(destination);
+    }
+
+    public void setWin(boolean win) {
+        this.win = win;
     }
 }
