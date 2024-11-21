@@ -38,6 +38,9 @@ public class TilePanel extends JPanel{
 //        ghostThread.start();
     }
 
+
+
+
     public void setPlayer(boolean isPlayer, String direction) {
         this.isPlayer = isPlayer;
         this.direction = direction; // Update player's direction
@@ -128,8 +131,9 @@ public class TilePanel extends JPanel{
             }
         }
         repaint();
-        if(playerTouchedGhost())
+        if(playerTouchedGhost()) {
             frame.updatePlayer();
+        }
     }
 
     public void setIsGhost(boolean isGhost){
@@ -170,7 +174,7 @@ public class TilePanel extends JPanel{
             dot.draw(g, getWidth(), getHeight());
         }
 
-        if (isGhost) {
+        if (ghost != null) {
             ghost.drawObject(g);
         }
 

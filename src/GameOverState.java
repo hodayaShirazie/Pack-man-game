@@ -9,6 +9,7 @@ public class GameOverState implements State{
     public int getLives() {
         return lives;
     }
+
     public void decreaseLives() {
         lives--;
 
