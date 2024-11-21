@@ -11,9 +11,11 @@ public class KeepPlayingState implements State {
     }
     public void decreaseLives() {
         lives--;
+        System.out.println("from keep" + lives);
     }
     public void fail(){
         decreaseLives();
+        //todo show some screen of fail
     }
 
 }

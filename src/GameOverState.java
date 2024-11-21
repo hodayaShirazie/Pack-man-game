@@ -11,8 +11,10 @@ public class GameOverState implements State{
     }
     public void decreaseLives() {
         lives--;
+
     }
     public void fail(){
-        //todo callback
+        System.out.println("from gameOver" + lives);
+        //todo callback - show screen of gameOver and the scores/playAgain
     }
 }

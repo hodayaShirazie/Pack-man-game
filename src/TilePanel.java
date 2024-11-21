@@ -56,10 +56,11 @@ public class TilePanel extends JPanel{
     }
 
     public void setGhost(Ghost ghost){
-
+        if(ghost != null) {
+            ghost.setPanel(this);
+            this.isGhost = true;
+        }
         this.ghost = ghost;
-        this.isGhost = true;
-        ghost.setPanel(this);
         repaint();
 
     }
@@ -80,6 +81,7 @@ public class TilePanel extends JPanel{
                         TilePanel right = frame.getBoard()[positionInBoard.x + 1][positionInBoard.y];
                         frame.getBoard()[right.positionInBoard.x][right.positionInBoard.y].setGhost(this.getGhost());
                         frame.getBoard()[positionInBoard.x][positionInBoard.y].setIsGhost(false);
+                        frame.getBoard()[positionInBoard.x][positionInBoard.y].ghost = null;
 //                        ghost.move(right);
                         foundDirection = true;
                     }
@@ -89,6 +91,8 @@ public class TilePanel extends JPanel{
                         TilePanel left = frame.getBoard()[positionInBoard.x - 1][positionInBoard.y];
                         frame.getBoard()[left.positionInBoard.x][left.positionInBoard.y].setGhost(this.getGhost());
                         frame.getBoard()[positionInBoard.x][positionInBoard.y].setIsGhost(false);
+                        frame.getBoard()[positionInBoard.x][positionInBoard.y].ghost = null;
+
 //                        ghost.move(left);
                         foundDirection = true;
                     }
@@ -98,6 +102,8 @@ public class TilePanel extends JPanel{
                         TilePanel up = frame.getBoard()[positionInBoard.x][ positionInBoard.y + 1];
                         frame.getBoard()[up.positionInBoard.x][up.positionInBoard.y].setGhost(this.getGhost());
                         frame.getBoard()[positionInBoard.x][positionInBoard.y].setIsGhost(false);
+                        frame.getBoard()[positionInBoard.x][positionInBoard.y].ghost = null;
+
 
 //                        ghost.move(up);
                         foundDirection = true;
@@ -108,6 +114,8 @@ public class TilePanel extends JPanel{
                         TilePanel down = frame.getBoard()[positionInBoard.x][ positionInBoard.y - 1];
                         frame.getBoard()[down.positionInBoard.x][down.positionInBoard.y].setGhost(this.getGhost());
                         frame.getBoard()[positionInBoard.x][positionInBoard.y].setIsGhost(false);
+                        frame.getBoard()[positionInBoard.x][positionInBoard.y].ghost = null;
+
 
 //                        ghost.move(down);
                         foundDirection = true;
@@ -120,6 +128,8 @@ public class TilePanel extends JPanel{
             }
         }
         repaint();
+        if(playerTouchedGhost())
+            frame.updatePlayer();
     }
 
     public void setIsGhost(boolean isGhost){
@@ -138,6 +148,11 @@ public class TilePanel extends JPanel{
     public Ghost getGhost() {
         return ghost;
     }
+
+    public boolean playerTouchedGhost(){
+        return (isGhost && isPlayer);
+    }
+
 
     @Override
     protected void paintComponent(Graphics g) {

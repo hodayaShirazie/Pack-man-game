@@ -11,8 +11,8 @@ public class Frame extends JFrame  {
     private static final int BOARD_SIZE = 20; // Board size. IF IS SIZE CHANGED THEN MATRIX IN generateMaze() SHOULD BE CHANGED ACCORDINGLY
     private TilePanel[][] board;
     private int[][] maze;
-
     private Player player;
+    private int numOfGhosts;
 
 //    private int playerX = 1;
 //    private int playerY = 1;
@@ -48,7 +48,7 @@ public class Frame extends JFrame  {
             }
         }
 
-        addGhosts();
+//        addGhosts();
 
         board[player.getLocation().x][player.getLocation().y].setPlayer(true,"RIGHT"); // Mark initial Pac-Man position
         addKeyListener(new KeyAdapter() {
@@ -61,10 +61,17 @@ public class Frame extends JFrame  {
         setTitle("Pac-Man-Game");
         setSize(BOARD_SIZE * TILE_SIZE, BOARD_SIZE * TILE_SIZE);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
+//        setVisible(true);
+//        setFocusable(true);
+        startGame();
+
+
+    }
+
+    private void startGame() {
+        addGhosts(3);
         setVisible(true);
         setFocusable(true);
-
-
     }
 
     private void generateMaze() {
@@ -140,6 +147,9 @@ public class Frame extends JFrame  {
                 currentTile.removeDot();
                 System.out.println("Score: " + player.getScore());
             }
+
+            if(currentTile.playerTouchedGhost())
+                updatePlayer();
         }
     }
 
@@ -156,9 +166,27 @@ public class Frame extends JFrame  {
             if (isLocationNotWall(point.x, point.y)) {
                 board[point.x][point.y].addGhost(true, point,this);
                 i++;
-
                 Thread thread = new Thread(board[point.x][point.y].getGhost());
                 thread.start();
+            }
+
+
+        }
+        while (i < ghostsAmount);
+    }
+
+    private void addGhosts(int num) {
+        Random rand = new Random();
+        int ghostsAmount = num, i = 0;
+        Point point;
+        do {
+            point = new Point(rand.nextInt(BOARD_SIZE), rand.nextInt(BOARD_SIZE));
+            if (isLocationNotWall(point.x, point.y)) {
+                board[point.x][point.y].addGhost(true, point,this);
+                i++;
+                Thread thread = new Thread(board[point.x][point.y].getGhost());
+                thread.start();
+                increaseGhost();
             }
 
 
@@ -172,6 +200,19 @@ public class Frame extends JFrame  {
 
     public TilePanel[][] getBoard() {
         return board;
+    }
+
+    public void updatePlayer(){
+        player.update();
+        //todo break at the game for a second
+    }
+
+    public void increaseGhost(){
+        numOfGhosts++;
+    }
+
+    public void decreaseGhost(){
+        numOfGhosts--;
     }
 
     public static void main(String[] args) {

@@ -1,6 +1,7 @@
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Observer;
 
 class Player implements State, Runnable, ILocatable, IMovable {
 
@@ -40,6 +41,10 @@ class Player implements State, Runnable, ILocatable, IMovable {
             state = new GameOverState();
         }
         state.fail();
+    }
+
+    public void update() {
+        fail();
     }
 
     public int getLives() {

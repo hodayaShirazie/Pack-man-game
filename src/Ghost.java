@@ -72,6 +72,34 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable, IMovab
 
     }
 
+    public BufferedImage changeColorToWhite() {
+
+        Random random = new Random();
+        int red = 255;
+        int green = 255;
+        int blue = 255;
+
+        Color white = new Color(red, green, blue, 255);
+
+        BufferedImage coloredImage = new BufferedImage(
+                drawable.getImage().getWidth(),
+                drawable.getImage().getHeight(),
+                BufferedImage.TYPE_INT_ARGB // תמיכה בשקיפות
+        );
+
+        for (int x = 0; x < drawable.getImage().getWidth(); x++) {
+            for (int y = 0; y < drawable.getImage().getHeight(); y++) {
+                int pixel = drawable.getImage().getRGB(x, y);
+                if ((pixel >> 24) != 0x00) { // רק פיקסלים שאינם שקופים
+                    coloredImage.setRGB(x, y, white.getRGB());
+                }
+            }
+        }
+        return coloredImage;
+
+    }
+
+
     public BufferedImage getImage() {
         return drawable.getImage();
     }
@@ -89,9 +117,13 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable, IMovab
     }
 
     public void run() {
+
+        Random random = new Random();
+        int timeToLive = random.nextInt(7000, 15000);
         long startTime = System.currentTimeMillis();
 
-        while (System.currentTimeMillis() - startTime < 10000) {
+        while (System.currentTimeMillis() - startTime < timeToLive) {
+
             this.getDrawable().getPanel().moveGhost(this.frame);
             try {
                 sleep(400);
@@ -100,6 +132,21 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable, IMovab
                 e.printStackTrace();
             }
         }
+
+//        getPanel().getGhost().setImage(changeColorToWhite());//todo why dont work?
+
+//        try {
+//            sleep(5000);
+//        }
+//        catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+        getPanel().setIsGhost(false);
+        getPanel().setGhost(null);
+
+        getPanel().repaint();
+        frame.decreaseGhost();
+
     }
 
     private void updatePosition(int dx, int dy) {
@@ -122,7 +169,6 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable, IMovab
     public void move(Point destination){
         movable.move(destination);
     }
-
 
     public void setPanel(TilePanel panel) {
         drawable.setPanel(panel);
