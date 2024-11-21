@@ -42,15 +42,13 @@ public class Frame extends JFrame  {
                     dot = null;
                 }
 
-                board[i][j] = new TilePanel(maze[i][j], dot);
+                board[i][j] = new TilePanel(maze[i][j], dot, new Point(i,j));
                 board[i][j].setPreferredSize(new Dimension(TILE_SIZE, TILE_SIZE));
                 add(board[i][j]);
             }
         }
 
-        Random rand = new Random();
-        Point point = new Point(rand.nextInt(BOARD_SIZE), rand.nextInt(BOARD_SIZE));
-        board[point.x][point.y].setGhost(true, point);
+        addGhosts();
 
         board[player.getLocation().x][player.getLocation().y].setPlayer(true,"RIGHT"); // Mark initial Pac-Man position
         addKeyListener(new KeyAdapter() {
@@ -129,7 +127,7 @@ public class Frame extends JFrame  {
             }
         }
 
-        if (isValidMove(nextX, nextY)) {
+        if (isLocationNotWall(nextX, nextY)) {
             board[player.getLocation().x][player.getLocation().y].setPlayer(false, ""); // Clear previous position
 
             player.move(new Point(nextX, nextY));
@@ -145,8 +143,35 @@ public class Frame extends JFrame  {
         }
     }
 
-    private boolean isValidMove(int x, int y) {
+    public boolean isLocationNotWall(int x, int y) {
         return x >= 0 && x < BOARD_SIZE && y >= 0 && y < BOARD_SIZE && maze[x][y] != 1;
+    }
+
+    private void addGhosts() {
+        Random rand = new Random();
+        int ghostsAmount = rand.nextInt(1, 6), i = 0;
+        Point point;
+        do {
+            point = new Point(rand.nextInt(BOARD_SIZE), rand.nextInt(BOARD_SIZE));
+            if (isLocationNotWall(point.x, point.y)) {
+                board[point.x][point.y].addGhost(true, point,this);
+                i++;
+
+                Thread thread = new Thread(board[point.x][point.y].getGhost());
+                thread.start();
+            }
+
+
+        }
+        while (i < ghostsAmount);
+    }
+
+    public int[][] getMaze() {
+        return maze;
+    }
+
+    public TilePanel[][] getBoard() {
+        return board;
     }
 
     public static void main(String[] args) {
@@ -156,7 +181,6 @@ public class Frame extends JFrame  {
     }
 
 
-    //todo add Ghost to board with moving
     //todo implement run function
     //todo implement observer
 

@@ -11,7 +11,7 @@ public interface IDrawable {
     /**
      * The path to the directory where images are stored.
      */
-//    final static String PICTURE_PATH = ""; //todo upload image ang get a path
+    final static String PICTURE_PATH = "src/Images/";
 
     /**
      * Loads images for the drawable object.
@@ -32,6 +32,8 @@ public interface IDrawable {
     void setImage(BufferedImage image);
 
     TilePanel getPanel();
+
+    void setPanel(TilePanel panel);
 
 }
 

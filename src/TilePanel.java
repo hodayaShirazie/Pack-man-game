@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.Random;
 
 /**
  * Represents a single tile in the Pac-Man game.
@@ -8,41 +9,121 @@ import java.awt.*;
 public class TilePanel extends JPanel{
 
     private boolean isPlayer;
+
     private Dot dot;
+
     private final int tileType;
+
     private String direction; // "UP", "DOWN", "LEFT", "RIGHT"
+
     private boolean isGhost;
+
     private Ghost ghost;
 
+    private Point positionInBoard;
 
-
-    public void setGhost(Ghost ghost) {
-        this.isGhost = true;
-        repaint();  // יצייר מחדש את ה-Panel כדי להציג את רוח הרפאים
+    public Point getPositionInBoard() {
+        return positionInBoard;
     }
 
-    public TilePanel(int tileType, Dot dot) {
+    public TilePanel(int tileType, Dot dot, Point positionInBoard) {
         this.tileType = tileType;
         this.dot = dot;
         this.isPlayer = false;
         this.isGhost = false;
         this.direction = "RIGHT";
+        this.positionInBoard = positionInBoard;
 
 //        Thread ghostThread = new Thread(ghost);
 //        ghostThread.start();
     }
 
-    public void setPlayer(boolean isPlayer, String direction) {//todo maybe add a field isAGhost
+    public void setPlayer(boolean isPlayer, String direction) {
         this.isPlayer = isPlayer;
         this.direction = direction; // Update player's direction
         repaint();
     }
 
-    public void setGhost(boolean isGhost, Point point) {
-        ghost = new Ghost(this, point);
+    public void addGhost(boolean isGhost, Point point,Frame frame) {
+        ghost = new Ghost(this, point, frame);
         ghost.setImage(ghost.changeColor());
         this.isGhost = isGhost;
+//        System.out.println(ghost.getLocation().toString());
         repaint();
+//        while (ghost.getLocation().x < board.length)
+//            moveGhost(board, maze);
+
+    }
+
+    public void setGhost(Ghost ghost){
+
+        this.ghost = ghost;
+        this.isGhost = true;
+        ghost.setPanel(this);
+        repaint();
+
+    }
+
+    public void moveGhost(Frame frame) {
+
+        int [][] maze = frame.getMaze();
+        Random random = new Random();
+        int nextStep = random.nextInt(1, 5);
+
+        boolean foundDirection = false;
+
+
+        while (!foundDirection) {
+            switch (nextStep) {
+                case 1:
+                    if (frame.isLocationNotWall(positionInBoard.x + 1, positionInBoard.y)) {
+                        TilePanel right = frame.getBoard()[positionInBoard.x + 1][positionInBoard.y];
+                        frame.getBoard()[right.positionInBoard.x][right.positionInBoard.y].setGhost(this.getGhost());
+                        frame.getBoard()[positionInBoard.x][positionInBoard.y].setIsGhost(false);
+//                        ghost.move(right);
+                        foundDirection = true;
+                    }
+                    break;
+                case 2:
+                    if (frame.isLocationNotWall(positionInBoard.x - 1, positionInBoard.y)){
+                        TilePanel left = frame.getBoard()[positionInBoard.x - 1][positionInBoard.y];
+                        frame.getBoard()[left.positionInBoard.x][left.positionInBoard.y].setGhost(this.getGhost());
+                        frame.getBoard()[positionInBoard.x][positionInBoard.y].setIsGhost(false);
+//                        ghost.move(left);
+                        foundDirection = true;
+                    }
+                    break;
+                case 3:
+                    if (frame.isLocationNotWall(positionInBoard.x, positionInBoard.y + 1)) {
+                        TilePanel up = frame.getBoard()[positionInBoard.x][ positionInBoard.y + 1];
+                        frame.getBoard()[up.positionInBoard.x][up.positionInBoard.y].setGhost(this.getGhost());
+                        frame.getBoard()[positionInBoard.x][positionInBoard.y].setIsGhost(false);
+
+//                        ghost.move(up);
+                        foundDirection = true;
+                    }
+                    break;
+                case 4:
+                    if (frame.isLocationNotWall(positionInBoard.x, positionInBoard.y -1)) {
+                        TilePanel down = frame.getBoard()[positionInBoard.x][ positionInBoard.y - 1];
+                        frame.getBoard()[down.positionInBoard.x][down.positionInBoard.y].setGhost(this.getGhost());
+                        frame.getBoard()[positionInBoard.x][positionInBoard.y].setIsGhost(false);
+
+//                        ghost.move(down);
+                        foundDirection = true;
+                    }
+                    break;
+            }
+
+            if (!foundDirection) {
+                nextStep = random.nextInt(1, 5);
+            }
+        }
+        repaint();
+    }
+
+    public void setIsGhost(boolean isGhost){
+        this.isGhost = isGhost;
     }
 
     public boolean hasDot() {
@@ -52,6 +133,10 @@ public class TilePanel extends JPanel{
     public void removeDot() {
         dot = null;
         repaint();
+    }
+
+    public Ghost getGhost() {
+        return ghost;
     }
 
     @Override

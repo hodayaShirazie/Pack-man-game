@@ -2,14 +2,12 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-// todo add locateable or/and movable interface and drawable
 class Player implements State, Runnable, ILocatable, IMovable {
 
     private static Player instance = null;
 
     private int score;
     private State state;
-    private IDrawable drawable;
     private ILocatable position;
     private IMovable movable;
 
@@ -50,14 +48,6 @@ class Player implements State, Runnable, ILocatable, IMovable {
 
     public void run() {
         //todo
-    }
-
-    public void drawObject(Graphics g) {
-        drawable.drawObject(g);
-    }
-
-    public void loadImage(String path) {
-        drawable.loadImage(path);
     }
 
     public Point getLocation() {

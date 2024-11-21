@@ -1,16 +1,24 @@
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.Random;
+import static java.lang.Thread.sleep;
 
-public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable {
+
+public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable, IMovable {
 
     private IDrawable drawable;
 
     private ILocatable locatable;
 
-    public Ghost(TilePanel panel, Point point){
-        drawable = new Drawable("C:\\Users\\Student\\IdeaProjects\\Pack-man-game\\Ghost.png", 20, panel);
+    private IMovable movable;
+
+    private Frame frame;
+
+    public Ghost(TilePanel panel, Point point, Frame frame){
         locatable = new Locatable(point);
+        movable = new Movable(locatable.getLocation());
+        drawable = new Drawable("Ghost.png", 20, panel, locatable.getLocation());
+        this.frame = frame;
     }
 
     public void drawObject(Graphics g){
@@ -22,7 +30,7 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable {
     }
 
     protected Object clone()  {
-        return new Ghost(this.getPanel(), this.getLocation());
+        return new Ghost(this.getPanel(), this.getLocation(), this.frame);
     }
 
     public BufferedImage changeColor() {
@@ -81,21 +89,16 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable {
     }
 
     public void run() {
-        while (true) {
-            // השתמש ב-Thread.sleep כדי לשלוט במהירות תנועת הרוח
+        long startTime = System.currentTimeMillis();
+
+        while (System.currentTimeMillis() - startTime < 10000) {
+            this.getDrawable().getPanel().moveGhost(this.frame);
             try {
-                Thread.sleep(500); // הרוח תזוז כל 500 מילישניות
-            } catch (InterruptedException e) {
+                sleep(400);
+            }
+            catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
-            // תנועה אקראית של הרוח
-            Random random = new Random();
-            int dx = random.nextInt(3) - 1; // -1, 0, 1
-            int dy = random.nextInt(3) - 1; // -1, 0, 1
-
-            // עדכון המיקום של הרוח בתוך המטריצה
-            updatePosition(dx, dy);
         }
     }
 
@@ -107,13 +110,24 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable {
         // לדוג' עדכון המיקום במטריצה ובאחרת
     }
 
-    public Point getLocation(){
+    public Point getLocation() {
         return locatable.getLocation();
     }
 
-    public void setLocation(Point point){
+    public void setLocation(Point point) {
         locatable.setLocation(point);
+
     }
+
+    public void move(Point destination){
+        movable.move(destination);
+    }
+
+
+    public void setPanel(TilePanel panel) {
+        drawable.setPanel(panel);
+    }
+
 
 
 }

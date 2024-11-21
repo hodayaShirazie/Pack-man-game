@@ -8,14 +8,22 @@ import java.io.IOException;
 public class Drawable implements IDrawable{
 
     private BufferedImage image;
-    private int size;
-    private TilePanel panel;
-//    private JPanel panel;//todo add panel
 
-    public Drawable(String path, int size, TilePanel panel){
+    private int size;
+
+    private TilePanel panel;
+
+    private Point location;
+
+    public Drawable(String path, int size, TilePanel panel, Point location){
 //        this.image = image;
         loadImage(path);
         this.size = size;
+        this.panel = panel;
+        this.location = location;
+    }
+
+    public void setPanel(TilePanel panel){
         this.panel = panel;
     }
 
@@ -27,8 +35,7 @@ public class Drawable implements IDrawable{
      */
     public void loadImage(String imageName) {
         try {
-            image = ImageIO.read(new File("C:\\Users\\Student\\IdeaProjects\\Pack-man-game\\Ghost.png"));
-//            image = ImageIO.read(new File(PICTURE_PATH + imageName));
+            image = ImageIO.read(new File(PICTURE_PATH + imageName));
         }
         catch (IOException e) {
             System.out.println("Cannot load images for " + imageName); }
@@ -41,7 +48,6 @@ public class Drawable implements IDrawable{
      * @param g the graphics context to draw on
      */
     public void drawObject (Graphics g) {
-        //todo implement
         if(image != null)
             g.drawImage(image, 1, 1, size, size, panel);
     }
