@@ -84,7 +84,7 @@ This project is licensed under the [MIT License](LICENSE).
 
 ## Screenshots
 
-![Pac-Man Screenshot]("C:\Users\Student\Pictures\Screenshots\Screenshot (266).png")
+![Pac-Man Screenshot]("https://github.com/hodayaShirazie/Pack-man-game/blob/main/TheGameBoard.png")
 
 
 ---
