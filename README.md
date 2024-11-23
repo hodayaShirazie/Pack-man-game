@@ -32,7 +32,6 @@ A Java-based implementation of the classic **Pac-Man** game, showcasing object-o
 1. **Clone the Repository**
    ```bash
    git clone https://github.com/hodayaShirazie/Pac-Man-Game.git
-   cd Pac-Man-Game
    ```
 
 2. **Compile the Code**
