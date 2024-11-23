@@ -69,6 +69,12 @@ A Java-based implementation of the classic **Pac-Man** game, showcasing object-o
 
 ---
 
+## Screenshot
+
+![Pac-Man Screenshot](src/Images/Screenshot%202024-11-23%20191442.png)
+
+---
+
 ## Contributions
 
 Contributions are welcome! Feel free to open issues or submit pull requests to improve the game.
