@@ -6,7 +6,6 @@ import java.util.Observer;
 class Player implements State, Runnable, ILocatable, IMovable {
 
     private static Player instance = null;
-
     private int score;
     private State state;
     private ILocatable position;

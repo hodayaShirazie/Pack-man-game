@@ -14,6 +14,7 @@ public class GameOverState implements State{
         lives--;
 
     }
-    public void fail(){
+
+    public void fail() {
     }
 }

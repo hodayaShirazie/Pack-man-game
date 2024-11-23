@@ -14,10 +14,11 @@ public class Dot implements ILocatable{
         g.fillOval(width / 2 - dotSize / 2, height / 2 - dotSize / 2, dotSize, dotSize);
     }
 
-    public Point getLocation(){
+    public Point getLocation() {
         return position.getLocation();
     }
-    public void setLocation(Point location){
+
+    public void setLocation(Point location) {
         position.setLocation(location);
     }
 }

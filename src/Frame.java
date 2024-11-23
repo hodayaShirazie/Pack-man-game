@@ -16,14 +16,9 @@ public class Frame extends JFrame  {
     private boolean isGameActive;
     private static int maxScoreWorth;
     private static final int scoreWorth = 5;
-
     private static final int BOARD_SIZE_WIDTH = 29; // Board size. IF IS SIZE CHANGED THEN MATRIX IN generateMaze() SHOULD BE CHANGED ACCORDINGLY
     private static final int BOARD_SIZE_HEIGHT = 25; // Board size. IF IS SIZE CHANGED THEN MATRIX IN generateMaze() SHOULD BE CHANGED ACCORDINGLY
 
-
-//    private int playerX = 1;
-//    private int playerY = 1;
-//    private int score = 0;
 
     public Frame() {
 
@@ -80,7 +75,6 @@ public class Frame extends JFrame  {
             for (int j = 0; j < BOARD_SIZE_HEIGHT; j++)
                 if (maze[i][j] == 0)
                     ++sum;
-        System.out.println("sum = " + sum*scoreWorth);
         return sum*scoreWorth;
     }
 
@@ -102,13 +96,6 @@ public class Frame extends JFrame  {
             }
         });
         timer.start();
-//        while (true){
-////            System.out.println(isGameActive);
-//            if (!isGameActive){
-//                JOptionPane.showMessageDialog(this, "Game Paused! Resuming in 3 seconds...");
-//                new Timer(3000, ev -> isGameActive = true).start();
-//            }
-//        }
     }
 
     private void generateMaze() {
@@ -186,7 +173,6 @@ public class Frame extends JFrame  {
                 player.incrementScore();
                 currentTile.removeDot();
                 isPlayerWon();
-                System.out.println("Score: " + player.getScore());
             }
 
             if(currentTile.playerTouchedGhost()) {
@@ -204,7 +190,6 @@ public class Frame extends JFrame  {
 
     private void isPlayerWon() {
         if(player.getScore() == maxScoreWorth) {
-            System.out.println("player won !! congrats !!!!");
             declareWining();
         }
     }
@@ -221,7 +206,7 @@ public class Frame extends JFrame  {
 
         // Add congratulatory text
         JLabel text = new JLabel("Congratulations! You won with " + maxScoreWorth + " points.", JLabel.CENTER);
-        text.setFont(new Font("Arial", Font.PLAIN, 20));
+        text.setFont(new Font("Arial", Font.PLAIN, 15));
 
         // Create a panel for the buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
@@ -244,9 +229,7 @@ public class Frame extends JFrame  {
         // Play again button functionality
         playAgainButton.addActionListener(e -> {
             resetGame();
-            System.out.println("Play Again was clicked");
-            frame.dispose(); // Close the current frame
-            // Logic to restart the game goes here
+            frame.dispose();
         });
     }
 
@@ -262,7 +245,7 @@ public class Frame extends JFrame  {
 
         // Add congratulatory text
         JLabel text = new JLabel("You are a loser ;( \n\r you only got " + player.getScore() + " points.", JLabel.CENTER);
-        text.setFont(new Font("Arial", Font.PLAIN, 20));
+        text.setFont(new Font("Arial", Font.PLAIN, 15));
 
         // Create a panel for the buttons
         JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 15, 0));
@@ -285,9 +268,8 @@ public class Frame extends JFrame  {
         // Play again button functionality
         playAgainButton.addActionListener(e -> {
             resetGame();
-            System.out.println("Play Again was clicked");
             frame.dispose(); // Close the current frame
-            // Logic to restart the game goes here
+
         });
     }
 
@@ -296,24 +278,6 @@ public class Frame extends JFrame  {
         dispose();
         new Frame();
     }
-
-//    private void addGhosts() {
-//        Random rand = new Random();
-//        int ghostsAmount = rand.nextInt(1, 6), i = 0;
-//        Point point;
-//        do {
-//            point = new Point(rand.nextInt(BOARD_SIZE), rand.nextInt(BOARD_SIZE));
-//            if (isLocationNotWall(point.x, point.y)) {
-//                board[point.x][point.y].addGhost(true, point,this);
-//                i++;
-//                Thread thread = new Thread(board[point.x][point.y].getGhost());
-//                thread.start();
-//            }
-//
-//
-//        }
-//        while (i < ghostsAmount);
-//    }
 
     private void addGhosts(int num) {
         Random rand = new Random();
@@ -361,24 +325,4 @@ public class Frame extends JFrame  {
         new Frame();
 
     }
-
-//BASIC FUNCTION TO GENERATE MAZE
-//    private void generateRandomMaze() {
-//        Random rand = new Random();
-//        for (int i = 0; i < BOARD_SIZE; i++) {
-//            for (int j = 0; j < BOARD_SIZE; j++) {
-//                if (i == 0 || j == 0 || i == BOARD_SIZE - 1 || j == BOARD_SIZE - 1) {
-//                    maze[i][j] = 1; // Border wall
-//                } else if (rand.nextDouble() < 0.3) {
-//                    maze[i][j] = 1; // Random wall
-//                } else if (rand.nextDouble() < 0.1) {
-//                    maze[i][j] = 2; // Dot
-//                } else {
-//                    maze[i][j] = 0; // Path
-//                }
-//            }
-//        }
-//        maze[playerX][playerY] = 0; // Ensure initial position is clear
-//    }
-
 }

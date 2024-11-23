@@ -12,7 +12,8 @@ public class Locatable implements ILocatable{
     public Point getLocation(){
         return point;
     }
-    public void setLocation(Point point){
+
+    public void setLocation(Point point) {
         this.point.x = point.x;
         this.point.y = point.y;
     }

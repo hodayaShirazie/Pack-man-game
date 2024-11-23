@@ -9,17 +9,11 @@ import java.util.Random;
 public class TilePanel extends JPanel{
 
     private boolean isPlayer;
-
     private Dot dot;
-
     private final int tileType;
-
     private String direction; // "UP", "DOWN", "LEFT", "RIGHT"
-
     private boolean isGhost;
-
     private Ghost ghost;
-
     private Point positionInBoard;
 
     public Point getPositionInBoard() {
@@ -38,9 +32,6 @@ public class TilePanel extends JPanel{
 //        ghostThread.start();
     }
 
-
-
-
     public void setPlayer(boolean isPlayer, String direction) {
         this.isPlayer = isPlayer;
         this.direction = direction; // Update player's direction
@@ -58,7 +49,7 @@ public class TilePanel extends JPanel{
 
     }
 
-    public void setGhost(Ghost ghost){
+    public void setGhost(Ghost ghost) {
         if(ghost != null) {
             ghost.setPanel(this);
             this.isGhost = true;
@@ -136,7 +127,7 @@ public class TilePanel extends JPanel{
         }
     }
 
-    public void setIsGhost(boolean isGhost){
+    public void setIsGhost(boolean isGhost) {
         this.isGhost = isGhost;
     }
 
@@ -153,7 +144,7 @@ public class TilePanel extends JPanel{
         return ghost;
     }
 
-    public boolean playerTouchedGhost(){
+    public boolean playerTouchedGhost() {
         return (isGhost && isPlayer);
     }
 
@@ -206,6 +197,5 @@ public class TilePanel extends JPanel{
             g.fillArc(x, y, width, height, startAngle, arcAngle);
         }
     }
-
 }
 

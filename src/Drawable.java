@@ -8,17 +8,12 @@ import java.io.IOException;
 public class Drawable implements IDrawable{
 
     private BufferedImage image;
-
     private int height;
-
     private int width;
-
     private TilePanel panel;
-
     private Point location;
 
-    public Drawable(String path, int width, int height, TilePanel panel, Point location){
-//        this.image = image;
+    public Drawable(String path, int width, int height, TilePanel panel, Point location) {
         loadImage(path);
         this.height = height;
         this.width = width;
@@ -26,7 +21,7 @@ public class Drawable implements IDrawable{
         this.location = location;
     }
 
-    public void setPanel(TilePanel panel){
+    public void setPanel(TilePanel panel) {
         this.panel = panel;
     }
 
@@ -72,6 +67,4 @@ public class Drawable implements IDrawable{
     public TilePanel getPanel() {
         return panel;
     }
-
-
 }
