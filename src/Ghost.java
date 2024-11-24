@@ -40,7 +40,6 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable, IMovab
 
         float alpha = 0.5f;
 
-
         BufferedImage coloredImage = new BufferedImage(
                 drawable.getImage().getWidth(),
                 drawable.getImage().getHeight(),
@@ -64,7 +63,6 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable, IMovab
             }
         }
         return coloredImage;
-
     }
 
     public BufferedImage changeColorToWhite() {
@@ -130,10 +128,9 @@ public class Ghost implements IDrawable, Runnable, Cloneable, ILocatable, IMovab
 
         getPanel().setIsGhost(false);
         getPanel().setGhost(null);
-
         getPanel().repaint();
-        frame.decreaseGhost();
 
+        frame.decreaseGhost();
     }
 
     private void updatePosition(int dx, int dy) {

@@ -12,10 +12,6 @@ class Player implements State, Runnable, ILocatable, IMovable {
     private IMovable movable;
     private boolean win;
 
-    public State getState() {
-        return state;
-    }
-
     private Player() {
         win = false;
         score = 0;
@@ -29,6 +25,10 @@ class Player implements State, Runnable, ILocatable, IMovable {
             instance = new Player();
         }
         return instance;
+    }
+
+    public State getState() {
+        return state;
     }
 
     public int getScore() {
@@ -55,7 +55,10 @@ class Player implements State, Runnable, ILocatable, IMovable {
     }
 
     public void run() {
-        while (state.getLives() >= 0 || !win){}
+
+        while (state.getLives() >= 0 || !win){
+
+        }
     }
 
     public Point getLocation() {

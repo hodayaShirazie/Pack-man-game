@@ -13,7 +13,6 @@ public class Frame extends JFrame  {
     private int[][] maze;
     private Player player;
     private int numOfGhosts;
-    private boolean isGameActive;
     private static int maxScoreWorth;
     private static final int scoreWorth = 5;
     private static final int BOARD_SIZE_WIDTH = 29; // Board size. IF IS SIZE CHANGED THEN MATRIX IN generateMaze() SHOULD BE CHANGED ACCORDINGLY
@@ -22,7 +21,6 @@ public class Frame extends JFrame  {
 
     public Frame() {
 
-        isGameActive = true;
         player = Player.getInstance();
         player.setLocation(new Point(9, 10));
 
@@ -33,10 +31,12 @@ public class Frame extends JFrame  {
         setLayout(new GridLayout(BOARD_SIZE_WIDTH, BOARD_SIZE_HEIGHT));
 
         generateMaze();
+
         maxScoreWorth = calcMaxScoreWorth();
 
         for (int i = 0; i < BOARD_SIZE_WIDTH; i++) {
             for (int j = 0; j < BOARD_SIZE_HEIGHT; j++) {
+
                 Dot dot;
 
                 if(maze[i][j] == 0){
@@ -88,7 +88,6 @@ public class Frame extends JFrame  {
         setFocusable(true);
 
         Timer timer = new Timer(1 / 120, e -> {
-//            System.out.println(numOfGhosts);
             if (numOfGhosts < 3){
                 Random rand = new Random();
                 int addGhosts = rand.nextInt(1,5 - numOfGhosts + 1);
@@ -308,7 +307,6 @@ public class Frame extends JFrame  {
 
     public void updatePlayer(){
         player.update();
-        isGameActive = false;
         setTitle("Pac-Man-Game | Lives: " + player.getLives());
     }
 

@@ -42,10 +42,8 @@ public class TilePanel extends JPanel{
         ghost = new Ghost(this, point, frame);
         ghost.setImage(ghost.changeColor());
         this.isGhost = isGhost;
-//        System.out.println(ghost.getLocation().toString());
         repaint();
-//        while (ghost.getLocation().x < board.length)
-//            moveGhost(board, maze);
+
 
     }
 
@@ -167,18 +165,6 @@ public class TilePanel extends JPanel{
         if (ghost != null) {
             ghost.drawObject(g);
         }
-
-//            if (isPlayer) {
-//                Graphics2D g2d = (Graphics2D) g;
-//                g2d.setColor(Color.YELLOW); // Pac-Man color
-//
-//                // Draw a circular arc representing Pac-Man
-//                // Parameters: x, y, width, height, startAngle, arcAngle
-//                int size = Math.min(getWidth(), getHeight()) - 10; // Keep it proportional to the tile
-//                int x = (getWidth() - size) / 2;
-//                int y = (getHeight() - size) / 2;
-//                g2d.fillArc(x, y, size, size, 30, 300); // 30 to 330 degrees creates the "mouth" shape
-//            }
 
         if (isPlayer) {
             g.setColor(Color.YELLOW);
