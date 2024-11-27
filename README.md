@@ -42,7 +42,7 @@ A Java-based implementation of the classic **Pac-Man** game, showcasing object-o
 
 3. **Run the Game**
    ```bash
-   java -cp bin Main
+   java -cp bin Frame
    ```
 
 ---
