@@ -73,11 +73,4 @@ This project is licensed under the [MIT License](LICENSE).
 
 ---
 
-## Screenshots
-
-![Pac-Man Screenshot]("https://github.com/hodayaShirazie/Pack-man-game/blob/main/TheGameBoard.png")
-
-
----
-
 Enjoy playing Pac-Man while exploring software design principles! 🎮
