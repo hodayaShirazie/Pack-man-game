@@ -57,7 +57,7 @@ The goal is to collect all the coins on the board, with each coin worth 5 points
 
 ## Screenshot
 
-![Pac-Man Screenshot](src/Images/Screenshot%202024-11-23%20191442.png)
+![Pac-Man Screenshot](src/Images/gmaeImage.png)
 
 ---
 
