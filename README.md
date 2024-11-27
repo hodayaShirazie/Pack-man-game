@@ -12,10 +12,10 @@ A Java-based implementation of the classic **Pac-Man** game, showcasing object-o
    - A player can score points along their route and be disqualified by touching a ghost.
 
 2. **Design Patterns:**
-   - **Singleton:** Ensures a single instance of the game manager to control the game logic.
+   - **Singleton:** Ensures a single player in each game to control the game logic.
    - **Prototype:** Allows cloning of game objects, such as ghosts, to enable efficient object creation.
    - **Callback:** Implements event-driven logic for player interactions and game updates.
-   - **State:** Manages different player states to handle different disqualification cases (e.g., player has lives , game-over) dynamically.
+   - **State:** Manages the player's behavior based on their current state, with each state defining unique actions the player can perform (e.g., having lives, being game-over) dynamically.
 
 3. **Multi-threading:**
    - Each ghost operates as a separate thread, ensuring non-blocking movement.
@@ -46,26 +46,12 @@ A Java-based implementation of the classic **Pac-Man** game, showcasing object-o
    ```
 
 ---
+## How it works
+The player starts with 3 lives. Each time the player touches a ghost, one life is lost.
+The goal is to collect all the coins on the board, with each coin worth 5 points.
 
-## How It Works
-
-1. **Game Manager (Singleton):**
-   - Centralized control for managing game states, player scores, and interactions.
-   - Ensures only one instance handles all logic, preventing conflicts.
-
-2. **Prototype for Ghosts:**
-   - Enables efficient creation of new ghost instances during the game.
-   - Avoids the overhead of initializing from scratch by cloning existing templates.
-
-3. **Callback for Interactions:**
-   - Player movement and ghost interactions trigger callbacks for real-time updates.
-
-4. **State Management:**
-   - The game dynamically transitions between states (e.g., "playing", "paused") using a State pattern implementation.
-
-5. **Multi-threading:**
-   - Ghosts move independently on the screen as threads.
-   - Prevents UI freezing and ensures a smooth gameplay experience.
+- Win Condition: Collect all coins while still having lives remaining.
+- Lose Condition: Lose all lives before collecting all the coins.
 
 ---
 
@@ -95,8 +81,3 @@ This project is licensed under the [MIT License](LICENSE).
 ---
 
 Enjoy playing Pac-Man while exploring software design principles! 🎮
-
-1. **Clone the Repository**
-   ```bash
-   git clone https://github.com/hodayaShirazie/Pac-Man-Game.git
-   cd Pac-Man-Game
