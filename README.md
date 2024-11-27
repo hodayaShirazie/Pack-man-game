@@ -9,13 +9,13 @@ A Java-based implementation of the classic **Pac-Man** game, showcasing object-o
 1. **Game Mechanics:**
    - Control Pac-Man using arrow keys to navigate the board.
    - Ghosts move independently as threads, appearing and disappearing randomly.
-   - Dynamic player states to handle different disqualification cases, including player with lives and game over state.
+   - A player can score points along their route and be disqualified by touching a ghost.
 
 2. **Design Patterns:**
    - **Singleton:** Ensures a single instance of the game manager to control the game logic.
    - **Prototype:** Allows cloning of game objects, such as ghosts, to enable efficient object creation.
    - **Callback:** Implements event-driven logic for player interactions and game updates.
-   - **State:** Manages different game states (e.g., play, end) dynamically.
+   - **State:** Manages different player states to handle different disqualification cases (e.g., player has lives , game-over) dynamically.
 
 3. **Multi-threading:**
    - Each ghost operates as a separate thread, ensuring non-blocking movement.
