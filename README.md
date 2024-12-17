@@ -1,6 +1,6 @@
 # Pac-Man Game
 
-A Java-based implementation of the classic **Pac-Man** game, showcasing object-oriented principles, multi-threading, desighn patterns and GUI.
+A Java-based implementation of the classic **Pac-Man** game, showcasing object-oriented principles, multi-threading, design patterns and GUI.
 
 ---
 
